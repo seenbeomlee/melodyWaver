@@ -24,7 +24,7 @@ var vizInit = function (){
     play();
   }
   
-function play() {
+  function play() {
     var context = new AudioContext();
     var src = context.createMediaElementSource(audio);
     var analyser = context.createAnalyser();
