@@ -2,7 +2,7 @@
 var noise = new SimplexNoise();
 
 // the main visualiser function
-var vizInit = function (){
+var vizInit = function () {
   
   var file = document.getElementById("thefile");
   var audio = document.getElementById("audio");
@@ -13,26 +13,31 @@ var vizInit = function (){
     audio.play();
     play();
   }
+
   file.onchange = function(){
     fileLabel.classList.add('normal');
     audio.classList.add('active');
     var files = this.files;
-    
+
+    /* get the audio file from the possible array of files, the user uploaded */
     audio.src = URL.createObjectURL(files[0]);
+    /* load the file, and then play it - all using HTML5 audio element's API */
     audio.load();
     audio.play();
     play();
   }
   
   function play() {
-    var context = new AudioContext();
-    var src = context.createMediaElementSource(audio);
-    var analyser = context.createAnalyser();
-    src.connect(analyser);
-    analyser.connect(context.destination);
-    analyser.fftSize = 512;
+    var context = new AudioContext(); // create context
+    var src = context.createMediaElementSource(audio); // created src inside ctx
+    var analyser = context.createAnalyser(); // create analyser in ctx
+    src.connect(analyser); // connect analyser node to the src
+    analyser.connect(context.destination); // connect the destination node of context to the analyser
+    /* FFT tutorial: https://youtu.be/zKKGA30bHG0 */
+    analyser.fftSize = 512; // default value of FFT size is 2048, however i chose a lower resolution of 512 as it is easier to compute
     var bufferLength = analyser.frequencyBinCount;
-    var dataArray = new Uint8Array(bufferLength);
+    var dataArray = new Uint8Array(bufferLength); // since FFT size is 512, i have a buffer with length 256 data points corresponding to the
+    // whole audio frequency spectrum that i can utilise for visualisation
 
     //here comes the webgl
     var scene = new THREE.Scene();
@@ -93,13 +98,16 @@ var vizInit = function (){
 
     render();
 
+    /* this function runs at every update */
     function render() {
       analyser.getByteFrequencyData(dataArray);
 
-      var lowerHalfArray = dataArray.slice(0, (dataArray.length/2) - 1);
-      var upperHalfArray = dataArray.slice((dataArray.length/2) - 1, dataArray.length - 1);
+      /* slice the dataArray into two halves */
+      var lowerHalfArray = dataArray.slice(0, (dataArray.length/2) - 1); // treble and the lower half --> Use the aggregate of the lower frequencies to approximate the beat
+      var upperHalfArray = dataArray.slice((dataArray.length/2) - 1, dataArray.length - 1); // upper half contains all the higher freq --> upper half's consolidated values were used to visualise the texture
 
       var overallAvg = avg(dataArray);
+      /* do some basic reductions/normalisations */
       var lowerMax = max(lowerHalfArray);
       var lowerAvg = avg(lowerHalfArray);
       var upperMax = max(upperHalfArray);
@@ -110,9 +118,12 @@ var vizInit = function (){
       var upperMaxFr = upperMax / upperHalfArray.length;
       var upperAvgFr = upperAvg / upperHalfArray.length;
 
+      /* use the reduced values to modulate the 3d objects */
+      /* these are the planar meshes above and below the sphere */
       makeRoughGround(plane, modulate(upperAvgFr, 0, 1, 0.5, 4));
       makeRoughGround(plane2, modulate(lowerMaxFr, 0, 1, 0.5, 4));
       
+      /* this modulates the sphere's shape */
       makeRoughBall(ball, modulate(Math.pow(lowerMaxFr, 0.8), 0, 1, 0, 8), modulate(upperAvgFr, 0, 1, 0, 4));
 
       group.rotation.y += 0.005;
@@ -126,6 +137,11 @@ var vizInit = function (){
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
+    /* core idea of the visualize was about modulating a sphere's size based on the beat signature,
+    and deform its surface based on the vocal. To make it, i used some procedural noise that adds some physical
+    texture to the ball, using audio data as an input. */
+
+    // i used 'Simplex Noise' here: https://www.npmjs.com/package/simplex-noise
     function makeRoughBall(mesh, bassFr, treFr) {
         mesh.geometry.vertices.forEach(function (vertex, i) {
             var offset = mesh.geometry.parameters.radius;
