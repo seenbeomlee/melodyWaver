@@ -1,1 +1,1 @@
-melody waver with melodyne, HTML canvas, (pixi.js, webGL)
+melody waver with melodyne, HTML canvas
