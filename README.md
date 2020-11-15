@@ -69,3 +69,22 @@ near, far
 > 카메라 앞에 렌더링되는 공간 범위
 
 기본적으로 카메라는 -Z 축 +Y 축을 바라본다.
+
+---
+
+1-3. requestAnimationFrame
+
+브라우저에 애니메이션 프레임을 요청하는 함수이다. 인자로 실행할 함수를 전달한다.
+
+1-4. Light
+
+``` Javascript
+  const color = 0xFFFFFF;
+  const intensity = 1;
+  const light = new THREE.DirectionalLight(color, intensity);
+  light.position.set(-1, 2, 4);
+  scene.add(light);
+```
+
+position.set
+> DirectionalLight에는 위치(position)와 목표(target) 속성이 default(0, 0, 0)로 있다.
