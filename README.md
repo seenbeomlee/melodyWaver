@@ -4,7 +4,7 @@ melodyWaver with three.js & melodyne
 ## Contents
 0. 먼저 알아야 할 것들 | https://threejsfundamentals.org/threejs/lessons/kr/threejs-prerequisites.html
 1. three.js란? | https://threejsfundamentals.org/threejs/lessons/kr/threejs-fundamentals.html
-2. 
+2. 반응형 디자인 | https://threejsfundamentals.org/threejs/lessons/kr/threejs-responsive.html
 
 
 ## reference
@@ -88,3 +88,5 @@ near, far
 
 position.set
 > DirectionalLight에는 위치(position)와 목표(target) 속성이 default(0, 0, 0)로 있다.
+
+# 2. 반응형 디자인
