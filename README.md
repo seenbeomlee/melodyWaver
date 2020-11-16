@@ -90,3 +90,29 @@ position.set
 > DirectionalLight에는 위치(position)와 목표(target) 속성이 default(0, 0, 0)로 있다.
 
 # 2. 반응형 디자인
+
+2-0. 반응형이란?
+
+ 웹에서 반응형이란, 웹 페이지를 PC, 타블렛, 스마트폰 등 다양한 환경에서 이용하기 용이하도록 사이즈에 맞춰 콘텐츠를 최적화하는 것을 의미한다.
+
+``` javascript
+  <canvas id="c"></canvas>
+```
+  canvas 요소는 기본적으로 300x150 pixel을 갖는다.
+
+``` javascript
+  <style>
+  html, body {
+    margin: 0;
+    height: 100%;
+  }
+  #c {
+    width: 100%;
+    height: 100%;
+    display: block; // canvas 요소의 default display 속성은 inline이다. (글자처럼 취급) => display: block 으로 변경
+  }
+  </style>
+```
+  body 요소는 default로 5 pixel의 margin이 지정되어 있으니, margin: 0
+  html과 body 요소의 height를 지정하지 않으면, contents의 높이만큼만 커지니, height: 100%로 창 전체를 채운다.
+
