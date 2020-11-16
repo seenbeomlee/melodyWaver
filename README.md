@@ -116,3 +116,15 @@ position.set
   body 요소는 default로 5 pixel의 margin이 지정되어 있으니, margin: 0
   html과 body 요소의 height를 지정하지 않으면, contents의 높이만큼만 커지니, height: 100%로 창 전체를 채운다.
 
+2-1. 해상도 errorFix
+
+창 크기에 따라, cube가 직육면체로 변한다.
+
+``` javascript
+  const canvas = renderer.domElement;
+  camera.aspect = canvas.clientWidth / canvas.clientHeight;
+  camera.updateProjectionMatrix();
+```
+
+ camera의 aspect(비율) 속성을 canvas의 화면 크기에 맞게 맞춘다.
+
