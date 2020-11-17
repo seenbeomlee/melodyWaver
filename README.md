@@ -213,5 +213,66 @@ canvas를 리사이징 할 때 직접 계산하기
 
  [Custom geometry를 만드는 법은 다음을 참조](https://threejsfundamentals.org/threejs/lessons/kr/threejs-custom-geometry.html)
 
+ x, y 좌표와 Object3D 를 매개변수로 받아 scene에 추가하는 addObject 함수
 
+ ```javascript
+  const objects = [];
+  const spread = 15;
 
+  function addObject(x, y, obj) {
+    obj.position.x = x * spread;
+    obj.position.y = y * spread;
+
+    scene.add(obj);
+    objects.push(obj);
+  }
+ ```
+
+ 물체를 무작위로 채색하는 함수 (hue, 채도, 명도)로 색을 지정하는 Color의 기능을 활용한다.
+
+ ```javascript
+  function createMaterial() {
+    const material = new THREE.MeshPhongMaterial({
+      side: THREE.DoubleSide, // three.js에게 삼각형의 양면 모두를 렌더링하라고 알려준다.
+    });
+
+    const hue = Math.random();
+    const saturation = 1;
+    const luminance = .5;
+    material.color.setHSL(hue, saturation, luminance);
+
+    return material;
+  }
+ ```
+
+ hue
+ > 0~1까지의 색상값을 고리 모양으로 배치한 것으로, 12시 = 빨강, 4시 = 녹색, 8시 = 파랑
+
+ saturation(채도)
+ > 0~1까지이며, 0 = 색이 가장 옅은 것, 1 = 색이 가장 진한 것을 의미한다.
+
+ luminance(명도)
+ > 0.0 = 검정, 1.0 = 하양, 0.5 = 색이 가장 풍부 / 명도가 0.0 -> 0.5로 갈수록 검정에서 hue에 가까워지고, 0.5 -> 1.0으로 갈수록 hue에서 하양에 가까워진다.
+
+ side: THREE.DoubleSide -> 렌더링 속도에 영향을 주므로, 필요한 물체에만 지정하는게 좋다.
+ > 구, 정육면체 같은 물체는 보이지 않는 안쪽 면을 렌더링 할 필요가 없지만, 예제의 경우 PlaneBufferGeometry나 ShapeBufferGeometry 등 안쪽 면이 없는 물체가 존재하기 때문에 'side: THREE.DoubleSide' 옵션을 설정하지 않으면, 반대편에서 봤을 때 물체가 사라진 것처럼 보인다.
+
+매개변수로 받은 geometry와 앞서 만든 createMaterial 함수를 사용해 무삭위로 색칠한 물체를 만들고, addObejct 함수로 scene에 추가하는 함수
+
+```javascript
+  function addSolidGeometry(x, y, geometry) {
+    const mesh = new THREE.Mesh(geometry, createMaterial());
+    addObject(x, y, mesh);
+  }
+```
+
+이를 통해, 정육면체를 만든다고 하면 다음과 같다.
+
+```javascript
+  {
+    const width = 8;
+    const height = 8;
+    const depth = 8;
+    addSolidGeometry(-2, -2, new THREE.BoxBufferGeometry(width, height, depth));
+  }
+```
