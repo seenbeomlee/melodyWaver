@@ -276,3 +276,40 @@ canvas를 리사이징 할 때 직접 계산하기
     addSolidGeometry(-2, -2, new THREE.BoxBufferGeometry(width, height, depth));
   }
 ```
+---
+
+3-1. 헬퍼 객체
+
+EdgesGeometry
+
+``` javascript
+  const size = 8;
+  const widthSegments = 2;
+  const heightSegments = 2;
+  const depthSegments = 2;
+  const boxGeometry = new THREE.BoxBufferGeometry(
+    size, size, size,
+    widthSegments, heightSegments, depthSegments);
+  const geometry = new THREE.EdgesGeometry(boxGeometry); // EdgesGeometry로 변환한다
+```
+
+ 다른 geometry를 받는 헬퍼 객체이다. 각-면 사이의 angle이 일정 값 이상일 때만 모서리를 표시한다.
+
+WireframeGeometry
+
+``` javascript
+  const size = 8;
+  const widthSegments =  1;  
+  const heightSegments = 2;  
+  const depthSegments = 2;  
+  const geometry = new THREE.WireframeGeometry(
+    new THREE.BoxBufferGeometry(
+      size, size, size,
+      widthSegments, heightSegments, depthSegments));
+```
+
+ 매개변수로 받은 geometry의 모서리 하나 당 하나의 선분(2개의 점)을 가진 geometry를 생성한다.
+ 
+ ...
+
+---
