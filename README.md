@@ -2,14 +2,14 @@
 melodyWaver with three.js & melodyne
 
 ## Contents
-0. 먼저 알아야 할 것들 | https://threejsfundamentals.org/threejs/lessons/kr/threejs-prerequisites.html
-1. three.js란? | https://threejsfundamentals.org/threejs/lessons/kr/threejs-fundamentals.html
-2. 반응형 디자인 | https://threejsfundamentals.org/threejs/lessons/kr/threejs-responsive.html
-3. three.js의 원시 모델 | https://threejsfundamentals.org/threejs/lessons/kr/threejs-primitives.html
+0. [먼저 알아야 할 것들](https://threejsfundamentals.org/threejs/lessons/kr/threejs-prerequisites.html)
+1. [three.js란?](https://threejsfundamentals.org/threejs/lessons/kr/threejs-fundamentals.html)
+2. [반응형 디자인](https://threejsfundamentals.org/threejs/lessons/kr/threejs-responsive.html)
+3. [three.js의 원시 모델](https://threejsfundamentals.org/threejs/lessons/kr/threejs-primitives.html)
 
 
 ## reference
-1. https://threejsfundamentals.org/threejs/lessons/kr/threejs-fundamentals.html
+1. [threejsfundamentals](https://threejsfundamentals.org/threejs/lessons/kr/threejs-fundamentals.html)
   
 ------------
 
@@ -201,7 +201,17 @@ canvas를 리사이징 할 때 직접 계산하기
 
 # 3. three.js의 원시 모델
 
-3-0. 
+3-0. 원시 모델
+
+ 대부분의 원시 모델은 Geometry와 BufferGeometry가 짝을 이룬다.
+
+ BufferGeometry => 원시 모델을 사용하지 않을 계획이거나, 기하학 모델을 수학적으로 계산하는 데 익숙한 경우
+ > BufferGeometry 기반의 원시 모델은 성능에 최적화된 모델이다. geometry의 정점들은 바로 렌더링 시 GPU에서 불러오기 좋은 배열 형태로 최적화 된다.
+
+ Geometry
+ > 3D 정점을 만드는 데는 'Vector3' Class, 삼각형을 만드는 데는 'Face3' Class 등 Javascript 기반 calss로 이루어져 있다.
+
+ [Custom geometry를 만드는 법은 다음을 참조](https://threejsfundamentals.org/threejs/lessons/kr/threejs-custom-geometry.html)
 
 
 
