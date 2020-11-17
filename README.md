@@ -313,3 +313,8 @@ WireframeGeometry
  ...
 
 ---
+
+3.2 textBufferGeometry
+
+ textBufferGeometry는 text의 mesh를 생성하기 위해 3D font data를 필요로 한다.
+ 
