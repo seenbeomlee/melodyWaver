@@ -116,6 +116,8 @@ position.set
   body 요소는 default로 5 pixel의 margin이 지정되어 있으니, margin: 0
   html과 body 요소의 height를 지정하지 않으면, contents의 높이만큼만 커지니, height: 100%로 창 전체를 채운다.
 
+---
+
 2-1. 해상도 errorFix
 
 창 크기에 따라, cube가 직육면체로 변한다.
@@ -127,4 +129,39 @@ position.set
 ```
 
  camera의 aspect(비율) 속성을 canvas의 화면 크기에 맞게 맞춘다.
+
+ canvas의 원본 크기, 해상도는 drawingbuffer라고 불린다.
+
+ Three.js에서는 'renderer.setSize' method를 호출하여 canvas의 드로잉버퍼 크기를 지정할 수 있다.
+
+ 이 때, 크기는 "canvas의 디스플레이 크기"를 고른다.
+
+``` javascript
+  function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height; // canvas 스펙상, resizing은 화면을 다시 렌더링해야 하므로, 같은 사이즈 일 때는 리사이징을 하지 않음으로써 불필요한 자원 낭비를 막을 필요가 있다.
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
+```
+
+ canvas의 크기가 다르다면, 'renderer.setSize' method를 호출해 새로운 width와 height를 넘겨준다.
+
+ 'renderer.setSize' method는 기본적으로 CSS의 크기를 설정하므로, 마지막 인자로 false를 넘겨준다.
+
+ (canvas가 다른 요소와 어울리려면, three.js에서 CSS를 제어하는 것 보다, 다른 요소와 같이 CSS로 제어하는 것이 일관성 있는 프로그래밍)
+
+ 따라서, 해상도 문제와 resizing을 해결할 수 있는 총 코드는 다음과 같이 된다.
+
+ ``` javascript
+  if (resizeRendererToDisplaySize(renderer)) {
+    const canvas = renderer.domElement;
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
+  }
+ ```
 
