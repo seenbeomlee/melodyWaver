@@ -5,6 +5,7 @@ melodyWaver with three.js & melodyne
 0. 먼저 알아야 할 것들 | https://threejsfundamentals.org/threejs/lessons/kr/threejs-prerequisites.html
 1. three.js란? | https://threejsfundamentals.org/threejs/lessons/kr/threejs-fundamentals.html
 2. 반응형 디자인 | https://threejsfundamentals.org/threejs/lessons/kr/threejs-responsive.html
+3. three.js의 원시 모델 | https://threejsfundamentals.org/threejs/lessons/kr/threejs-primitives.html
 
 
 ## reference
@@ -164,4 +165,43 @@ position.set
     camera.updateProjectionMatrix();
   }
  ```
+
+2-2. HD-DPI 디스플레이 다루기
+
+ Three.js로 HD-DPI를 다루는 3가지 방법
+
+ 아무것도 하지 않기
+ > 3D 렌더링은 많은 GPU 자원을 소모한다. 2018년 기준, HD-DPI는 약 3배의 해상도를 지녔다. 즉, HD-DPI가 아닌 기기와 비교했을 때, 한 픽셀 당 픽셀 수가 1:9
+ > 즉, 9배 많은 픽셀을 처리해야 한다.
+
+ renderer.setPixelRatio method를 이용해 해상도 배율을 알려주기
+ > 브라우저로부터 CSS pixel과 실제 기기 pixel의 배율을 맏아 three.js에게 넘겨준다.
+
+ ```javascript
+  renderer.setPixelRatio(window.devicePixelRatio);
+ ```
+
+> 성능 이슈가 있는 것으로 보인다 (추천X)
+
+canvas를 리사이징 할 때 직접 계산하기
+
+``` javascript
+  function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const pixelRatio = window.devicePixelRatio;
+    const width = canvas.clientWidth * pixelRatio | 0;
+    const height = canvas.clientHeight * pixelRtio | 0;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
+```
+
+# 3. three.js의 원시 모델
+
+3-0. 
+
+
 
