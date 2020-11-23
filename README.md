@@ -316,5 +316,46 @@ WireframeGeometry
 
 3.2 textBufferGeometry
 
- textBufferGeometry는 text의 mesh를 생성하기 위해 3D font data를 필요로 한다.
+ textBufferGeometry는 text의 mesh를 생성하기 위해 3D font data를 필요로 한다. (비동기 load)
+
+ ``` javascript
+  {
+    const loader = new THREE.FontLoader();
+    // promisify font loading
+    function loadFont(url) {
+      return new Promise((resolve, reject) => {
+        loader.load(url, resolve, undefined, reject);
+      })
+    }
+
+    async function doit() {
+      const font = await loadFont('resources/threejs/fonts/helvetiker_regular.typeface.json');
+      const geometry = new THREE.TextBufferGeometry('three.js', {
+        font: font,
+        size: 3.0,
+        height: .2,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.15,
+        bevelSize: .3,
+        bevelSegments: 5,
+      });
+      const mesh = new THREE.Mesh(geometry, createMaterial());
+      /* Three.js의 텍스트의 default 회전축은 왼쪽 모서리로, 중앙을 중심으로 돌게 한다 */
+      geometry.computeBoundingBox(); // 경계 좌표 계산
+      geometry.boundingBox.getCenter(mesh.position).multiplyScalar(-1);
+      /* 중앙을 중심으로 돌게 하려면 Three.js에게 geometry의 bounding box(경계 좌표)를 계산해 달라고 요청한 뒤, bounding box의 getCenter 메서드에 해당 mesh의 위치값 객체를 넘겨주어야 한다. 이러면 getCenter 메서드는 넘겨받은 위치값의 중앙 좌표값을 자신의 위치값으로 복사한다. 그리고 변경된 위치값 객체를 반환하는데, 이 객체의 multiplyScalar(-1) 메서드로 전체 텍스트의 회전 중심이 텍스트의 중앙에 오도록 조정할 수 있다. */
+
+      const parent = new THREE.Object3D();
+      parent.add(mesh);
+
+      addObject(-1, -1, parent);
+    }
+    doit();
+  }
+  ```
+
+3.3 PointsMaterial & sizeAttenuation
+
+[three.js의 원시 모델](https://threejsfundamentals.org/threejs/lessons/kr/threejs-primitives.html) 맨 하단의 예제 참조.
  
