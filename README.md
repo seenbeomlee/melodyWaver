@@ -6,6 +6,7 @@ melodyWaver with three.js & melodyne
 1. [three.js란?](https://threejsfundamentals.org/threejs/lessons/kr/threejs-fundamentals.html)
 2. [반응형 디자인](https://threejsfundamentals.org/threejs/lessons/kr/threejs-responsive.html)
 3. [three.js의 원시 모델](https://threejsfundamentals.org/threejs/lessons/kr/threejs-primitives.html)
+4. [three.js의 씬 그래프](https://threejsfundamentals.org/threejs/lessons/kr/threejs-scenegraph.html)
 
 
 ## reference
@@ -359,3 +360,12 @@ WireframeGeometry
 
 [three.js의 원시 모델](https://threejsfundamentals.org/threejs/lessons/kr/threejs-primitives.html) 맨 하단의 예제 참조.
  
+# 4. three.js의 씬 그래프
+
+4-0. Scene Graph란?
+
+ 3D 엔진에서 씬 그래프란, 요소(node)의 계층 구조를 그림으로 나타낸 것으로, 여기서 각 요소는 각각의 "지역 공간(local space)"을 가리킨다.
+
+ 다음과 같은 태양계 예제가 있다고 가정하자.
+
+[4-1](./threeJsEx/images/4-1.jpg)
