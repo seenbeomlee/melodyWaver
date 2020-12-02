@@ -368,4 +368,4 @@ WireframeGeometry
 
  다음과 같은 태양계 예제가 있다고 가정하자.
 
-[4-1](./threeJsEx/images/4-1.jpg)
+![4-1](./threeJsEx/images/4-1.jpg)
