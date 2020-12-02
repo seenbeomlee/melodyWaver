@@ -369,3 +369,36 @@ WireframeGeometry
  다음과 같은 태양계 예제가 있다고 가정하자.
 
 ![4-1](./threeJsEx/images/4-1.jpg)
+
+ 이와 같이, 우리는 지구에 살지만 지구의 자전/자전축 공전은 크게 신경쓰지 않는다. 이것은 모두 지구의 일이기 때문이다.
+ 우리가 걷거나, 뭔가를 타고 이동하는 동작은 지구의 일과는 무관한 것처럼 보인다(우리는 그저, '지구'라는 지역공간에서 제 몫을 다하면 된다.)
+
+ 그렇다면, 태양의 주변을 지구가 돌고 - 지구의 주변을 달이 도는 태양계 model을 만들어보자.
+
+---
+
+4-1. Sun
+
+ ```javaScript
+  {
+    // 회전값을 업데이트할 객체들
+    const objects = [];
+
+    // 하나의 geometry로 모든 태양, 지구, 달을 생성한다.
+    const radius = 1;
+    const widthSegments = 6;
+    const heightSegments = 6;
+    const sphereGeometry = new THREE.SphereBufferGeometry(
+      radius, widthSegments, heightSegments);
+    )
+
+    // material(재질)은 각각 생성한다.
+    const sunMaterial = new THREE.MeshPhongMaterial({emissive: 0xFFFF00});
+    const sunMesh = new THREE.Mesh(sphereGeometry, sunMaterial);
+    sunMesh.scale.set(5, 5, 5); // 태양의 크기를 키운다
+    scene.add(sunMesh);
+    objects.push(sunMesh);
+  }
+ ```
+ 
+
